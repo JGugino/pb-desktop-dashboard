@@ -1,0 +1,2 @@
+default:
+	@wails dev -tags webkit2_41
