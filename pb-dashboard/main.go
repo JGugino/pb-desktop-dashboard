@@ -22,7 +22,7 @@ func main() {
 		Height:        800,
 		MinWidth:      1280,
 		MinHeight:     800,
-		AlwaysOnTop:   true,
+		AlwaysOnTop:   false,
 		DisableResize: true,
 		Debug:         options.Debug{OpenInspectorOnStartup: true},
 		AssetServer: &assetserver.Options{

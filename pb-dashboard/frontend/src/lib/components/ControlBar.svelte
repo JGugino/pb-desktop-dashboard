@@ -34,17 +34,6 @@
     </div>
     <div id="bar-content">
         <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
-        <ServerIcon />
     </div>
     <div id="bar-footer">
         <!--Expand Control Bar Icon -->
@@ -140,7 +129,7 @@
         max-width: 90px;
         overflow: hidden;
         border-right: 4px solid rgba(31, 31, 31, 80%);
-        padding: 0.8rem 0;
+        padding: 0.8rem 0.4rem;
 
         & #bar-header {
             width: 90%;
