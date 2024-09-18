@@ -1,10 +1,23 @@
 <script>
+    import {
+        addNewTabAndSetActive,
+        activeTabs,
+    } from "../components/tabber/tabs.helper";
     import ServerIcon from "./ServerIcon.svelte";
+    import NewServer from "./tabber/tabs/NewServer.svelte";
 </script>
 
 <div id="control-bar">
     <div id="bar-header">
-        <button class="add-server-btn"
+        <button
+            class="add-server-btn"
+            on:click|preventDefault={() => {
+                addNewTabAndSetActive(
+                    `add-server-${$activeTabs.length + 1}`,
+                    "Add New Server",
+                    NewServer,
+                );
+            }}
             ><svg
                 width="52"
                 height="48"
@@ -32,9 +45,7 @@
             </svg>
         </button>
     </div>
-    <div id="bar-content">
-        <ServerIcon />
-    </div>
+    <div id="bar-content"></div>
     <div id="bar-footer">
         <!--Expand Control Bar Icon -->
         <button class="plain-btn">

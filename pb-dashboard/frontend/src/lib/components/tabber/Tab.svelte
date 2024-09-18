@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Tab } from "../scripts/tabs.helper";
+    import { type Tab } from "./tabs.helper";
     import { createEventDispatcher } from "svelte";
 
     export let tab: Tab = {
@@ -12,7 +12,13 @@
     const dispatch = createEventDispatcher();
 </script>
 
-<div id="tab" class:active={tab.active}>
+<button
+    id="tab"
+    class:active={tab.active}
+    on:click|preventDefault={() => {
+        dispatch("selectTab", tab.tabId);
+    }}
+>
     <span>{tab.tabTitle}</span>
     <button
         class="close-btn"
@@ -45,7 +51,7 @@
             </g>
         </svg>
     </button>
-</div>
+</button>
 
 <style>
     #tab {
@@ -53,12 +59,13 @@
         align-items: center;
         gap: 0.4rem;
         color: #1f1f1f;
+        background-color: #fcfcfc;
         border: 2px solid rgba(31, 31, 31, 80%);
         border-bottom: transparent;
         padding: 0.2rem 0.4rem;
         border-radius: 16px 16px 0 0;
 
-        & .active {
+        &.active {
             border-width: 4px;
         }
 

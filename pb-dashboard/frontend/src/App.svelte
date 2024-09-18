@@ -1,8 +1,10 @@
 <script lang="ts">
+    import { Toaster } from "svelte-french-toast";
     import ControlBar from "./lib/components/ControlBar.svelte";
-    import Tabber from "./lib/components/Tabber.svelte";
+    import Tabber from "./lib/components/tabber/Tabber.svelte";
 </script>
 
+<Toaster />
 <div class="app-container">
     <ControlBar />
     <div class="app-content">

@@ -1,46 +1,25 @@
 <script lang="ts">
-    import { createNewTab, activeTabs, type Tab } from "../scripts/tabs.helper";
+    import {
+        addNewTabAndSetActive,
+        closeTab,
+        selectTab,
+        activeTabs,
+        activeTab,
+        type Tab,
+    } from "./tabs.helper";
     import TabBar from "./TabBar.svelte";
     import NewServer from "./tabs/NewServer.svelte";
-
-    let activeTab: Tab = $activeTabs.length > 0 ? activeTabs[0] : null;
-
-    function addNewTabAndSetActive(id: string, title: string, component: any) {
-        const newTab = createNewTab(id, title, component);
-        $activeTabs = [...$activeTabs, newTab];
-        if (activeTab != null) {
-            activeTab.active = false;
-            let filtered = $activeTabs.filter(
-                (t) => t.tabId != activeTab.tabId,
-            );
-            $activeTabs = [...filtered, activeTab];
-            activeTab = newTab;
-        } else {
-            activeTab = newTab;
-        }
-    }
-
-    function closeTab(event: CustomEvent) {
-        const tabId = event.detail;
-
-        if (tabId.length <= 0) return;
-
-        let filtered = $activeTabs.filter((t) => t.tabId != activeTab.tabId);
-        $activeTabs = filtered;
-
-        if ($activeTabs.length > 0) {
-            activeTab = $activeTabs[0];
-        } else {
-            activeTab = null;
-        }
-    }
 </script>
 
 <div id="tabber">
-    <TabBar bind:tabs={$activeTabs} on:closeTab={closeTab} />
+    <TabBar
+        bind:tabs={$activeTabs}
+        on:closeTab={closeTab}
+        on:selectTab={selectTab}
+    />
 
     <div>
-        {#if activeTab === null || activeTab.tabComponent === null}
+        {#if $activeTab === null || $activeTab === undefined || $activeTab.tabComponent === null}
             <p class="empty-txt">
                 Looks a little empty, maybe try adding a new server!
                 <button
@@ -81,7 +60,7 @@
                 >
             </p>
         {:else}
-            <svelte:component this={activeTab.tabComponent} />
+            <svelte:component this={$activeTab.tabComponent} />
         {/if}
     </div>
 </div>
