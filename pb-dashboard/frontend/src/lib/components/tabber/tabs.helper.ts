@@ -62,11 +62,13 @@ export function selectTab(event: CustomEvent) {
   let tab = get(activeTab);
   let newTab: Tab;
   tabs = tabs.map((t) => {
-    if (t.tabId === tab.tabId) {
-      t.active = false;
-    } else if (t.tabId === tabId) {
-      newTab = t;
-      t.active = true;
+    if (t) {
+      if (t.tabId === tab.tabId) {
+        t.active = false;
+      } else if (t.tabId === tabId) {
+        newTab = t;
+        t.active = true;
+      }
     }
 
     return t;
@@ -84,17 +86,29 @@ export function closeTab(event: CustomEvent) {
   let tabs: Array<Tab> = get(activeTabs);
   let tab: Tab = get(activeTab);
 
-  let closingTabIndex: number = tabs.indexOf(tab);
+  let closingTabIndex: number = 0;
+
+  tabs.forEach((t, i) => {
+    if (t.tabId == tabId) {
+      closingTabIndex = i;
+    }
+  });
 
   let filtered = tabs.filter((t) => t.tabId != tab.tabId);
 
   if (filtered.length > 0) {
-    if (closingTabIndex - 1 >= 0) {
+    if (closingTabIndex > 0) {
+      console.log("Closing: ", closingTabIndex);
+      console.log("Next: ", closingTabIndex - 1);
       filtered[closingTabIndex - 1].active = true;
       tab = filtered[closingTabIndex - 1];
     } else {
-      filtered[0].active = true;
-      tab = filtered[0];
+      if (filtered.length > 1) {
+        console.log("Closing: ", closingTabIndex);
+        console.log("Next: ", closingTabIndex - 1);
+        filtered[1].active = true;
+        tab = filtered[1];
+      }
     }
   } else {
     tab = null;

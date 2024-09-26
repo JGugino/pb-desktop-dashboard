@@ -3,8 +3,10 @@
         addNewTabAndSetActive,
         activeTabs,
     } from "../components/tabber/tabs.helper";
+    import { servers } from "../scripts/servers.helper";
     import ServerIcon from "./ServerIcon.svelte";
     import NewServer from "./tabber/tabs/NewServer.svelte";
+    import ServerHome from "./tabber/tabs/ServerHome.svelte";
 </script>
 
 <div id="control-bar">
@@ -45,7 +47,21 @@
             </svg>
         </button>
     </div>
-    <div id="bar-content"></div>
+    <div id="bar-content">
+        {#each $servers as server}
+            <ServerIcon
+                on:click={() => {
+                    addNewTabAndSetActive(
+                        `open-server-${$activeTabs.length + 1}`,
+                        `Opening ${server.serverTitle}`,
+                        ServerHome,
+                    );
+                }}
+                iconText={server.serverTitle.split("")[0].toUpperCase()}
+                --bg-color={server.iconColor}
+            />
+        {/each}
+    </div>
     <div id="bar-footer">
         <!--Expand Control Bar Icon -->
         <button class="plain-btn">

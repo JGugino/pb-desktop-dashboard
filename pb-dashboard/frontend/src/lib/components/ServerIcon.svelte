@@ -1,10 +1,13 @@
-<button class="server-icon">
-    <span>T</span>
+<script lang="ts">
+    export let iconText = "";
+</script>
+
+<button class="server-icon" on:click>
+    <span>{iconText}</span>
 </button>
 
 <style>
     .server-icon {
-        --bg-color: rgba(255, 0, 0, 70%);
         --size: 60px;
 
         display: flex;

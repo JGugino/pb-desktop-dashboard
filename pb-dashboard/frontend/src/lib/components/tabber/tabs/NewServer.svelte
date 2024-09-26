@@ -2,6 +2,7 @@
     import Picker from "vanilla-picker";
     import toast, { type ToastOptions } from "svelte-french-toast";
     import { onMount } from "svelte";
+    import { createNewServer } from "../../../scripts/servers.helper";
 
     let serverTitle: string = "";
     let iconColor: string = "#e21b14";
@@ -43,7 +44,27 @@
             toast.error("You must enter a password", options);
         }
 
-        console.log(title, url, email, password);
+        const server = createNewServer(
+            title,
+            title,
+            url,
+            email,
+            password,
+            iconColor,
+        );
+
+        if (server) {
+            toast.success(`Server (${title}) added`, {
+                position: "bottom-right",
+            });
+        } else {
+            toast.error(`Something went wrong, please try again.`, {
+                position: "bottom-right",
+            });
+        }
+
+        const target = event.target as HTMLFormElement;
+        target.reset();
     }
 </script>
 
@@ -101,6 +122,7 @@
                     type="url"
                     id="new-server-url"
                     name="new-server-url"
+                    value="https://"
                     required
                 />
             </div>

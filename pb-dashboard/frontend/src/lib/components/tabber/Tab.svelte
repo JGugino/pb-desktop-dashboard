@@ -16,13 +16,16 @@
     id="tab"
     class:active={tab.active}
     on:click|preventDefault={() => {
-        dispatch("selectTab", tab.tabId);
+        if (tab.tabId) {
+            dispatch("selectTab", tab.tabId);
+        }
     }}
 >
     <span>{tab.tabTitle}</span>
     <button
         class="close-btn"
-        on:click|preventDefault={() => {
+        on:click|preventDefault|stopPropagation={() => {
+            console.log(tab);
             dispatch("closeTab", tab.tabId);
         }}
         ><svg
